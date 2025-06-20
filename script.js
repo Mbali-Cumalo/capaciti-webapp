@@ -594,3 +594,64 @@ modalStyles.textContent = `
 
 document.head.appendChild(modalStyles);
 
+// script.js
+document.addEventListener("DOMContentLoaded", function() {
+    let slideIndex = 1;
+    let slideInterval;
+
+    function showSlides(n) {
+        const slides = document.getElementsByClassName("slide");
+        const dots = document.getElementsByClassName("dot");
+
+        if (!slides.length || !dots.length) {
+            console.error("Slideshow error: No slides or dots found.");
+            return;
+        }
+
+        if (n > slides.length) { slideIndex = 1; }
+        if (n < 1) { slideIndex = slides.length; }
+
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+
+    function currentSlide(n) {
+        clearInterval(slideInterval);
+        slideIndex = n;
+        showSlides(slideIndex);
+        startSlideShow();
+    }
+
+    function startSlideShow() {
+        slideInterval = setInterval(() => {
+            slideIndex++;
+            showSlides(slideIndex);
+        }, 5000);
+    }
+
+    // Pause slideshow on hover
+    const slideshowContainer = document.querySelector(".slideshow-container");
+    if (slideshowContainer) {
+        slideshowContainer.addEventListener("mouseenter", () => clearInterval(slideInterval));
+        slideshowContainer.addEventListener("mouseleave", startSlideShow);
+    }
+
+    // Expose currentSlide to global scope
+    window.currentSlide = currentSlide;
+
+    // Initialize slideshow
+    try {
+        showSlides(slideIndex);
+        startSlideShow();
+    } catch (error) {
+        console.error("Slideshow initialization failed:", error);
+    }
+});
