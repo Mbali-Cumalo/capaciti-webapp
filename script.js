@@ -11,7 +11,30 @@ document.addEventListener('DOMContentLoaded', function() {
     initNewsletterForm();
     initScrollAnimations();
     initHeaderScroll();
+    initPartnerLogos();
 });
+//scroll of partner logos Animation
+function initPartnerLogos() {
+    const partnerLogos = document.querySelectorAll('.partner-logo');
+    const partnersGrid = document.querySelector('.partners-grid');
+    
+    if (partnerLogos.length > 0 && partnersGrid) {
+        partnerLogos.forEach(logo => {
+            logo.addEventListener('mouseenter', function() {
+                partnersGrid.style.animationPlayState = 'paused';
+            });
+            
+            logo.addEventListener('mouseleave', function() {
+                // Small delay before resuming to prevent flickering
+                setTimeout(() => {
+                    if (!document.querySelector('.partner-logo:hover')) {
+                        partnersGrid.style.animationPlayState = 'running';
+                    }
+                }, 100);
+            });
+        });
+    }
+}
 
 // Mobile Navigation
 function initMobileNavigation() {
