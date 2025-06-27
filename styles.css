@@ -493,6 +493,8 @@ section {
             position: relative;
             background: transparent;
             padding: 1rem 0;
+            mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
+            -webkit-mask: linear-gradient(90deg, transparent, white 20%, white 80%, transparent);
         }
 
         .partners-grid {
@@ -501,6 +503,14 @@ section {
             animation: scroll-partners 30s linear infinite;
             width: max-content;
         }
+
+        /* Duplicate the content for seamless loop */
+        /* .partners-grid::after {
+            content: '';
+            display: flex;
+            gap: var(--spacing-xl);
+            width: max-content;
+        } */
 
         .partner-logo {
             background: var(--white);
@@ -516,6 +526,7 @@ section {
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            position: relative;
         }
 
         .partner-logo:hover {
@@ -535,26 +546,7 @@ section {
             transform: scale(1.05);
         }
 
-        /* Tooltip Styles */
-        .tooltip {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(29, 41, 81, 0.95);
-            color: white;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            width: 280px;
-            margin-top: 10px;
-            backdrop-filter: blur(10px);
-        }
-/* Popup Card Styles */
+        /* Popup Card Styles */
         .popup-card {
             position: fixed;
             top: 50%;
@@ -569,7 +561,7 @@ section {
             visibility: hidden;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 1000;
-            width: 400px;
+            width: 300px;
             max-width: 90vw;
             max-height: 90vh;
             pointer-events: none;
@@ -604,8 +596,8 @@ section {
 
         .popup-card-header {
             text-align: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
+            margin-bottom: .5rem;
+            padding-bottom: .5rem;
             border-bottom: 2px solid #f1f5f9;
         }
 
@@ -626,25 +618,25 @@ section {
         .popup-card-content {
             text-align: left;
         }
-
+/* 
         .popup-card p {
             margin: 0 0 1.5rem 0;
             font-size: 1rem;
             line-height: 1.6;
             color: #64748b;
-        }
-
+        } */
+/* 
         .popup-card-footer {
             text-align: center;
             padding-top: 1rem;
             border-top: 1px solid #f1f5f9;
-        }
+        } */
 
         .popup-card a {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--purple), var(--salmon));
             color: white;
             text-decoration: none;
             padding: 0.75rem 1.5rem;
@@ -704,7 +696,7 @@ section {
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(calc(-200px * 4 - var(--spacing-xl) * 4));
+                transform: translateX(calc(-1 * (200px + var(--spacing-xl)) * 8));
             }
         }
 
@@ -728,7 +720,7 @@ section {
                     transform: translateX(0);
                 }
                 100% {
-                    transform: translateX(calc(-150px * 4 - var(--spacing-xl) * 4));
+                    transform: translateX(calc(-1 * (150px + var(--spacing-xl)) * 8));
                 }
             }
         }
