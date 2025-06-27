@@ -11,7 +11,72 @@ document.addEventListener('DOMContentLoaded', function() {
     initNewsletterForm();
     initScrollAnimations();
     initHeaderScroll();
+    initHeaderScroll();
+    initPartnerLogos();
+    hidePopup(logo);
 });
+
+// Scroll of partner logos Animation
+function initPartnerLogos() {
+    const partnersGrid = document.getElementById('partnersGrid');
+    
+    // Check if the element exists before proceeding
+    if (!partnersGrid) {
+        console.warn('Partners grid not found');
+        return;
+    }
+    
+    const originalLogos = Array.from(partnersGrid.children);
+    
+    // Only proceed if there are logos to clone
+    if (originalLogos.length === 0) {
+        console.warn('No partner logos found to clone');
+        return;
+    }
+    
+    // Clone all logos and append them to create seamless loop
+    originalLogos.forEach(logo => {
+        const clone = logo.cloneNode(true);
+        partnersGrid.appendChild(clone);
+    });
+    
+    // Handle popup interactions
+    document.querySelectorAll('.partner-logo').forEach(logo => {
+        const closeBtn = logo.querySelector('.close-btn');
+        const overlay = logo.querySelector('.popup-overlay');
+        
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hidePopup(logo);
+            });
+        }
+        
+        if (overlay) {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    hidePopup(logo);
+                }
+            });
+        }
+    });
+}
+
+// Helper function to hide popup (reduces code duplication)
+function hidePopup(logo) {
+    logo.style.transform = '';
+    const popup = logo.querySelector('.popup-card');
+    const popupOverlay = logo.querySelector('.popup-overlay');
+    
+    if (popup) {
+        popup.style.opacity = '0';
+        popup.style.visibility = 'hidden';
+    }
+    if (popupOverlay) {
+        popupOverlay.style.opacity = '0';
+        popupOverlay.style.visibility = 'hidden';
+    }
+}
 
 // Mobile Navigation
 function initMobileNavigation() {
