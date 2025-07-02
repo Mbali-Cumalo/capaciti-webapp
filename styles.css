@@ -945,13 +945,23 @@ section {
 /* Blog Section */
 .blog {
     background: var(--light-gray);
+    padding: var(--spacing-3xl) 0;
 }
 .blog-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
     gap: var(--spacing-xl);
     margin-bottom: var(--spacing-xl);
 }
+
+.blog-card.featured {
+    grid-column: span 3;
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-xl);
+}
+
 .blog-card {
     background: var(--white);
     border-radius: var(--radius-xl);
@@ -964,8 +974,18 @@ section {
     box-shadow: 0 20px 40px rgba(29, 41, 81, 0.5);
 }
 .blog-card.featured .blog-image {
-    height: 300px;
+    width: 50%;
+    height: auto;
 }
+.blog-card.featured .blog-content {
+    width: 50%;
+} 
+
+/* Optional: Adjust smaller cards to look more compact */
+.blog-card:not(.featured) .blog-image {
+    height: 150px;
+}
+
 .blog-image {
     height: 200px;
     overflow: hidden;
@@ -1040,10 +1060,43 @@ section {
 .blog-cta .cta-button {
     background: linear-gradient(135deg, var(--purple), var(--salmon));
     color: var(--white);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(107, 70, 193, 0.3);
+}
+@media (max-width: 768px) {
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .blog-card.featured {
+        flex-direction: column;
+    }
+
+    .blog-card.featured .blog-image,
+    .blog-card.featured .blog-content {
+        width: 100%;
+    }
 }
 
 /* News & Events Section */
 /* News & Events Section */
+
+.section-underline {
+    width: 270px;
+    height: 4px;
+    background: linear-gradient(135deg, var(--purple), var(--salmon));
+    margin: 0 auto;
+    border-radius: 2px;
+}
 .news-events {
     background: var(--white);
 }
@@ -1071,6 +1124,7 @@ section {
     background: var(--light-gray);
     border-radius: var(--radius-lg);
     transition: all 0.3s ease;
+    border-left: 4px solid var(--purple);
 }
 .event-item:hover {
     transform: translateY(-3px);
@@ -1116,6 +1170,7 @@ section {
     background: var(--light-gray);
     border-radius: var(--radius-lg);
     transition: all 0.3s ease;
+    border-left: 4px solid var(--purple);
 }
 .news-item:hover {
     transform: translateY(-3px);
