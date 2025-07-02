@@ -659,7 +659,7 @@ modalStyles.textContent = `
 
 document.head.appendChild(modalStyles);
 
-// script.js
+// script.js Slideshow 
 document.addEventListener("DOMContentLoaded", function() {
     let slideIndex = 1;
     let slideInterval;
@@ -721,65 +721,71 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-       //  <!-- Chatbot JavaScript -->
+    // <!-- Chatbot JavaScript -->
 
 class CapacitiChatbot {
     constructor() {
+        this.isInitialized = false;
         this.responses = {
             greeting: [
-                "Hello! I'm the CapaCiTi Assistant. Ask me anything about the programme!",
-                "Hi there! Need help learning about CapaCiTi? I'm here to assist.",
-                "Welcome! I can help with questions about CapaCiTi’s training, eligibility, and more."
+                "Hello! I'm the CapaCiTi Assistant. Ask me anything about the programme! 😊",
+                "Hi there! Need help learning about CapaCiTi? I'm here to assist. 🎓",
+                "Welcome! I can help with questions about CapaCiTi's training, eligibility, and more. 🚀"
             ],
             about: [
-                "CapaCiTi is a Digital Skills Accelerator by UVU Africa. It helps young South Africans build skills for the digital economy.",
-                "The CapaCiTi programme offers training in tech and professional skills to prepare youth for the workplace.",
-                "CapaCiTi equips individuals with digital, business, and soft skills to meet industry demand."
+                "CapaCiTi is a Digital Skills Accelerator by UVU Africa. It helps young South Africans build skills for the digital economy. 🌐",
+                "The CapaCiTi programme offers training in tech and professional skills to prepare youth for the workplace. 💻",
+                "CapaCiTi equips individuals with digital, business, and soft skills to meet industry demand. 🎯"
             ],
             eligibility: [
-                "To join CapaCiTi, you typically need to be a South African youth between 18–35 years, have a matric certificate, and show interest in tech or business.",
-                "Most programmes require you to be unemployed, under 35, and have at least a Matric qualification."
+                "To join CapaCiTi, you typically need to be a South African youth between 18–35 years, have a matric certificate, and show interest in tech or business. ✅",
+                "Most programmes require you to be unemployed, under 35, and have at least a Matric qualification. 📜"
+            ],
+            skills: [
+                "CapaCiTi teaches digital skills like coding, data analysis, digital marketing, and project management. 💻",
+                "The programme covers both technical skills (programming, web development) and soft skills (communication, teamwork). 🛠️"
             ],
             application: [
-                "You can apply on the UVU Africa website: https://uvuafrica.com/capaciti/. Look for the current open programmes.",
-                "Visit https://uvuafrica.com/capaciti/ and scroll to the bottom to apply for open programmes."
-            ],
-            benefits: [
-                "CapaCiTi offers training in digital and professional skills, mentorship, job readiness support, and connections to job opportunities.",
-                "You get practical training, soft skills development, industry exposure, and support in finding employment."
+                "You can apply through the CapaCiTi website or UVU Africa portals. Applications usually open several times a year. 📝",
+                "Keep an eye on their social media and website for application deadlines and requirements. 📅"
             ],
             contact: [
-                "You can contact UVU Africa via info@uvuafrica.com or check their website’s contact section.",
-                "Reach out to CapaCiTi through the contact form on https://uvuafrica.com/capaciti/."
+                "You can reach CapaCiTi through their website, social media, or contact UVU Africa directly for more information. 📞",
+                "Check out their official channels for the latest updates and contact details. 💬"
             ],
-            location: [
-                "CapaCiTi operates in Cape Town and Johannesburg. Some programmes may be remote or hybrid.",
-                "CapaCiTi training hubs are located in Cape Town and Johannesburg."
+            duration: [
+                "CapaCiTi programmes typically last 3-6 months, depending on the specific track you choose. ⏰",
+                "The programme is designed to be intensive but manageable, with both online and in-person components. 📚"
+            ],
+            cost: [
+                "CapaCiTi programmes are typically free for eligible participants, funded by various partners and sponsors. 💰",
+                "The programme aims to remove financial barriers to digital skills training for young South Africans. 🎯"
             ],
             default: [
-                "I'm not sure how to answer that. Try asking about CapaCiTi’s training, eligibility, how to apply, or contact info.",
-                "Hmm, I didn’t catch that. You can ask me things like 'How do I apply?', 'What skills do they teach?', or 'Am I eligible?'"
+                "I'm not sure how to answer that. Try asking about CapaCiTi's training, eligibility, how to apply, or contact info. 🤔",
+                "Hmm, I didn't catch that. You can ask me things like 'How do I apply?', 'What skills do they teach?', or 'Am I eligible?' ❓"
             ]
         };
 
-        this.initializeChatbot();
-    }
-
-    initializeChatbot() {
-        this.createChatInterface();
         this.bindEvents();
     }
 
-    createChatInterface() {
-        setTimeout(() => {
-            this.addMessage(this.getRandomResponse('greeting'), 'bot');
-        }, 1000);
+    // Initialize chat only when opened for the first time
+    initializeChat() {
+        if (!this.isInitialized) {
+            setTimeout(() => {
+                this.addMessage(this.getRandomResponse('greeting'), 'bot');
+            }, 500);
+            this.isInitialized = true;
+        }
     }
 
     bindEvents() {
         const chatbotInput = document.getElementById('chatbot-input');
         const chatbotSend = document.getElementById('chatbot-send');
         const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotClose = document.getElementById('chatbot-close');
+        const openButton = document.getElementById('open-chatbot');
         const chatbotContainer = document.getElementById('portfolio-chatbot');
 
         if (chatbotSend && chatbotInput) {
@@ -791,14 +797,32 @@ class CapacitiChatbot {
             });
         }
 
+        if (openButton && chatbotContainer) {
+            openButton.addEventListener('click', () => {
+                chatbotContainer.classList.add('open');
+                openButton.style.display = 'none';
+                this.initializeChat(); // Only initialize when opened
+            });
+        }
+
         if (chatbotToggle && chatbotContainer) {
             chatbotToggle.addEventListener('click', () => {
                 chatbotContainer.classList.toggle('chatbot-minimized');
+                // Use consistent text content for minimize/maximize
+                chatbotToggle.textContent = chatbotContainer.classList.contains('chatbot-minimized') ? '+' : '−';
+                chatbotToggle.title = chatbotContainer.classList.contains('chatbot-minimized') ? 'Expand' : 'Minimize';
+            });
+        }
+
+        if (chatbotClose && chatbotContainer && openButton) {
+            chatbotClose.addEventListener('click', () => {
+                chatbotContainer.classList.remove('open', 'chatbot-minimized');
+                openButton.style.display = 'flex';
             });
         }
     }
 
-    handleUserInput() {
+    async handleUserInput() {
         const input = document.getElementById('chatbot-input');
         const message = input.value.trim();
 
@@ -806,10 +830,33 @@ class CapacitiChatbot {
             this.addMessage(message, 'user');
             input.value = '';
 
-            setTimeout(() => {
-                const response = this.generateResponse(message);
-                this.addMessage(response, 'bot');
-            }, 500);
+            // Show typing indicator
+            this.showTypingIndicator();
+            
+            // Simulate processing time
+            await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 800));
+            
+            this.hideTypingIndicator();
+
+            const response = this.generateResponse(message);
+            this.addMessage(response, 'bot');
+        }
+    }
+
+    showTypingIndicator() {
+        const messagesContainer = document.getElementById('chatbot-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'typing-indicator';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    }
+
+    hideTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
         }
     }
 
@@ -824,35 +871,39 @@ class CapacitiChatbot {
 
     generateResponse(message) {
         const lowerMessage = message.toLowerCase();
-
-        if (this.containsKeywords(lowerMessage, ['hello', 'hi', 'hey', 'greetings'])) {
+        
+        if (this.containsKeywords(lowerMessage, ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'])) {
             return this.getRandomResponse('greeting');
         }
-
-        if (this.containsKeywords(lowerMessage, ['what is capaciti', 'about capaciti', 'who are you', 'what do you do'])) {
+        
+        if (this.containsKeywords(lowerMessage, ['about', 'what is', 'tell me about', 'capaciti', 'program', 'programme'])) {
             return this.getRandomResponse('about');
         }
-
-        if (this.containsKeywords(lowerMessage, ['who can apply', 'eligibility', 'requirements', 'qualifications', 'who is it for'])) {
+        
+        if (this.containsKeywords(lowerMessage, ['eligible', 'eligibility', 'requirements', 'qualify', 'who can', 'can i'])) {
             return this.getRandomResponse('eligibility');
         }
-
-        if (this.containsKeywords(lowerMessage, ['how to apply', 'application', 'apply', 'sign up', 'join'])) {
+        
+        if (this.containsKeywords(lowerMessage, ['skills', 'learn', 'teach', 'training', 'courses', 'what will i learn'])) {
+            return this.getRandomResponse('skills');
+        }
+        
+        if (this.containsKeywords(lowerMessage, ['apply', 'application', 'how to apply', 'register', 'sign up', 'join'])) {
             return this.getRandomResponse('application');
         }
-
-        if (this.containsKeywords(lowerMessage, ['benefits', 'what do i get', 'skills', 'training', 'services'])) {
-            return this.getRandomResponse('benefits');
-        }
-
-        if (this.containsKeywords(lowerMessage, ['contact', 'email', 'reach', 'phone', 'speak to someone'])) {
+        
+        if (this.containsKeywords(lowerMessage, ['contact', 'reach', 'phone', 'email', 'get in touch', 'call'])) {
             return this.getRandomResponse('contact');
         }
-
-        if (this.containsKeywords(lowerMessage, ['location', 'where', 'cape town', 'johannesburg', 'offices'])) {
-            return this.getRandomResponse('location');
+        
+        if (this.containsKeywords(lowerMessage, ['duration', 'how long', 'time', 'months', 'weeks', 'length'])) {
+            return this.getRandomResponse('duration');
         }
-
+        
+        if (this.containsKeywords(lowerMessage, ['cost', 'price', 'fee', 'money', 'free', 'pay', 'expensive'])) {
+            return this.getRandomResponse('cost');
+        }
+        
         return this.getRandomResponse('default');
     }
 
@@ -866,85 +917,57 @@ class CapacitiChatbot {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    new CapacitiChatbot();
+function createStars() {
+    const starsContainer = document.getElementById('stars');
+    const numberOfStars = 100;
+    
+    for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        
+        // Random position
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        
+        // Random size
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        
+        // Random animation delay
+        star.style.animationDelay = Math.random() * 3 + 's';
+        
+        starsContainer.appendChild(star);
+    }
+}
+
+// Newsletter form submission
+document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = this.querySelector('input[type="email"]').value;
+    
+    // Simple validation
+    if (email) {
+        alert('Thank you for subscribing! We\'ll keep you updated.');
+        this.querySelector('input[type="email"]').value = '';
+    }
 });
 
- function createStars() {
-            const starsContainer = document.getElementById('stars');
-            const numberOfStars = 100;
-            
-            for (let i = 0; i < numberOfStars; i++) {
-                const star = document.createElement('div');
-                star.className = 'star';
-                
-                // Random position
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                
-                // Random size
-                const size = Math.random() * 3 + 1;
-                star.style.width = size + 'px';
-                star.style.height = size + 'px';
-                
-                // Random animation delay
-                star.style.animationDelay = Math.random() * 3 + 's';
-                
-                starsContainer.appendChild(star);
-            }
-        }
-        
-        // Newsletter form submission
-        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('input[type="email"]').value;
-            
-            // Simple validation
-            if (email) {
-                alert('Thank you for subscribing! We\'ll keep you updated.');
-                this.querySelector('input[type="email"]').value = '';
-            }
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
             });
-        });
-        
-        // Initialize stars when page loads
-        document.addEventListener('DOMContentLoaded', createStars);
+        }
+    });
+});
 
-        // new function to handle the chatbot toggle
-
-         const chatbotContainer = document.querySelector('#portfolio-chatbot');
-        const openButton = document.querySelector('#open-chatbot');
-        const toggleButton = document.querySelector('#chatbot-toggle');
-        const closeButton = document.querySelector('#chatbot-close');
-
-        openButton.addEventListener('click', () => {
-            chatbotContainer.classList.add('open');
-            openButton.style.display = 'none';
-        });
-
-        toggleButton.addEventListener('click', () => {
-            if (chatbotContainer.classList.contains('chatbot-minimized')) {
-                chatbotContainer.classList.remove('chatbot-minimized');
-                toggleButton.textContent = '💬';
-            } else {
-                chatbotContainer.classList.add('chatbot-minimized');
-                toggleButton.textContent = '+';
-            }
-        });
-
-        closeButton.addEventListener('click', () => {
-            chatbotContainer.classList.remove('open', 'chatbot-minimized');
-            openButton.style.display = 'block';
-        });
+// Initialize stars and chatbot when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    createStars();
+    new CapacitiChatbot();
+});
