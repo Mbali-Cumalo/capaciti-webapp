@@ -1808,7 +1808,7 @@ section {
             right: 20px;
             width: 320px;
             height: 400px;
-            background: transparent;
+            background: white;
             border: 2px solid rgb(125, 51, 209);
             border-radius: 10px;
             display: none;
