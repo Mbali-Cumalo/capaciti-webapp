@@ -942,10 +942,17 @@ section {
 
   /* Impact Section */
   /* Impact Section */
-  .impact-section {
-    padding: 80px 0;
-    background: white;
-  }
+  /* Impact Section */
+
+.impact-section {
+
+  padding: 80px 0;
+
+  background: #f1d1d1; /* Changed from white to CAPACITI pink */
+
+}
+
+ 
 
   .impact-stats {
     max-width: 1000px;
