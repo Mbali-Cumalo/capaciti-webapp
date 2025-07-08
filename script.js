@@ -845,235 +845,203 @@ function animateCounter(element) {
     }, 16);
 }
 
-// Programme Filters
-function initProgrammeFilters() {
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    const programmeCards = document.querySelectorAll('.programme-card');
-
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Remove active class from all buttons
-            filterButtons.forEach(btn => btn.classList.remove('active'));
-            // Add active class to clicked button
-            this.classList.add('active');
-
-            const filter = this.getAttribute('data-filter');
-
-            programmeCards.forEach(card => {
-                if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                    card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }, 100);
-                } else {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    setTimeout(() => {
-                        card.style.display = 'none';
-                    }, 300);
-                }
-            });
-        });
-    });
-}
-
-// Programme Modals
-function initProgrammeModals() {
-    const learnMoreButtons = document.querySelectorAll('.learn-more-btn');
-    const modal = document.getElementById('programme-modal');
-    const closeBtn = document.querySelector('.close');
-    const modalTitle = document.getElementById('modal-title');
-    const modalContent = document.getElementById('modal-content-body');
-
-    const programmeData = {
-        'web-dev': {
-            title: 'Full Stack Web Development',
-            content: `
-                <div class="programme-details">
-                    <h3>Programme Overview</h3>
-                    <p>Our comprehensive Full Stack Web Development programme equips you with the skills needed to build modern web applications from front-end to back-end.</p>
-                    
-                    <h4>What You'll Learn:</h4>
-                    <ul>
-                        <li>HTML5, CSS3, and JavaScript fundamentals</li>
-                        <li>React.js for dynamic user interfaces</li>
-                        <li>Node.js and Express.js for server-side development</li>
-                        <li>Database management with MongoDB and SQL</li>
-                        <li>Version control with Git and GitHub</li>
-                        <li>Deployment and cloud services</li>
-                    </ul>
-                    
-                    <h4>Programme Details:</h4>
-                    <div class="programme-info">
-                        <div class="info-item">
-                            <strong>Duration:</strong> 12 weeks
-                        </div>
-                        <div class="info-item">
-                            <strong>Format:</strong> Full-time, hands-on training
-                        </div>
-                        <div class="info-item">
-                            <strong>Prerequisites:</strong> Basic computer literacy
-                        </div>
-                        <div class="info-item">
-                            <strong>Certification:</strong> Industry-recognized certificate
-                        </div>
-                    </div>
-                    
-                    <h4>Career Opportunities:</h4>
-                    <p>Graduates can pursue roles as Full Stack Developers, Front-end Developers, Back-end Developers, and Web Application Developers.</p>
-                    
-                    <div class="modal-cta">
-                        <a href="#contact" class="cta-button">Apply Now</a>
-                    </div>
-                </div>
-            `
-        },
-        'data-science': {
-            title: 'Data Science & Analytics',
-            content: `
-                <div class="programme-details">
-                    <h3>Programme Overview</h3>
-                    <p>Transform raw data into actionable insights with our comprehensive Data Science programme, covering statistical analysis, machine learning, and data visualization.</p>
-                    
-                    <h4>What You'll Learn:</h4>
-                    <ul>
-                        <li>Python programming for data analysis</li>
-                        <li>Statistical analysis and hypothesis testing</li>
-                        <li>Machine learning algorithms and implementation</li>
-                        <li>Data visualization with Matplotlib, Seaborn, and Plotly</li>
-                        <li>SQL for database querying</li>
-                        <li>Big data tools and cloud platforms</li>
-                    </ul>
-                    
-                    <h4>Programme Details:</h4>
-                    <div class="programme-info">
-                        <div class="info-item">
-                            <strong>Duration:</strong> 16 weeks
-                        </div>
-                        <div class="info-item">
-                            <strong>Format:</strong> Full-time with project-based learning
-                        </div>
-                        <div class="info-item">
-                            <strong>Prerequisites:</strong> Basic mathematics and statistics
-                        </div>
-                        <div class="info-item">
-                            <strong>Certification:</strong> Data Science Professional Certificate
-                        </div>
-                    </div>
-                    
-                    <h4>Career Opportunities:</h4>
-                    <p>Graduates can work as Data Scientists, Data Analysts, Business Intelligence Analysts, and Machine Learning Engineers.</p>
-                    
-                    <div class="modal-cta">
-                        <a href="#contact" class="cta-button">Apply Now</a>
-                    </div>
-                </div>
-            `
-        },
-        'ux-design': {
-            title: 'UX/UI Design',
-            content: `
-                <div class="programme-details">
-                    <h3>Programme Overview</h3>
-                    <p>Learn to create user-centered designs that solve real problems and deliver exceptional user experiences across digital platforms.</p>
-                    
-                    <h4>What You'll Learn:</h4>
-                    <ul>
-                        <li>User research and persona development</li>
-                        <li>Information architecture and wireframing</li>
-                        <li>Prototyping with Figma and Adobe XD</li>
-                        <li>Visual design principles and typography</li>
-                        <li>Usability testing and iteration</li>
-                        <li>Design systems and component libraries</li>
-                    </ul>
-                    
-                    <h4>Programme Details:</h4>
-                    <div class="programme-info">
-                        <div class="info-item">
-                            <strong>Duration:</strong> 10 weeks
-                        </div>
-                        <div class="info-item">
-                            <strong>Format:</strong> Full-time with portfolio development</li>
-                        </div>
-                        <div class="info-item">
-                            <strong>Prerequisites:</strong> Creative mindset and basic computer skills
-                        </div>
-                        <div class="info-item">
-                            <strong>Certification:</strong> UX/UI Design Professional Certificate
-                        </div>
-                    </div>
-                    
-                    <h4>Career Opportunities:</h4>
-                    <p>Graduates can work as UX Designers, UI Designers, Product Designers, and Interaction Designers.</p>
-                    
-                    <div class="modal-cta">
-                        <a href="#contact" class="cta-button">Apply Now</a>
-                    </div>
-                </div>
-            `
-        }
-    };
-
-    learnMoreButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const programme = this.getAttribute('data-programme');
-            const data = programmeData[programme];
-            
-            if (data) {
-                modalTitle.textContent = data.title;
-                modalContent.innerHTML = data.content;
-                modal.style.display = 'block';
-                document.body.style.overflow = 'hidden';
-            }
-        });
-    });
-
-    // Close modal
-    if (closeBtn) {
-        closeBtn.addEventListener('click', closeModal);
+// === Learn More Popup Functionality ===
+// Programme data
+  const programmes = {
+    cloud: {
+      title: "Cloud Computing",
+      description: "This 14-week intensive programme prepares students for cloud computing roles with hands-on experience in AWS, Azure, and DevOps methodologies. Graduates receive certification preparation and job placement support.",
+      curriculum: [
+        "Week 1-4: Cloud Fundamentals & AWS Core Services",
+        "Week 5-8: Azure Services & Hybrid Cloud Solutions",
+        "Week 9-11: DevOps & CI/CD Pipelines",
+        "Week 12-14: Cloud Security & Final Project"
+      ],
+      outcomes: [
+        "AWS Cloud Practitioner certification prep",
+        "Azure Fundamentals certification prep",
+        "Hands-on experience with real cloud projects",
+        "Access to CAPACITI's cloud employer network"
+      ]
+    },
+    ai: {
+      title: "AI Development",
+      description: "Our 16-week AI Development programme provides comprehensive training in machine learning and artificial intelligence, preparing students for roles in this cutting-edge field.",
+      curriculum: [
+        "Week 1-4: Python for AI & Data Science",
+        "Week 5-8: Machine Learning Fundamentals",
+        "Week 9-12: Deep Learning & Neural Networks",
+        "Week 13-16: AI Deployment & Final Project"
+      ],
+      outcomes: [
+        "Build and deploy AI models",
+        "Portfolio of AI projects",
+        "Job placement support",
+        "Access to AI industry events and meetups"
+      ]
+    },
+    support: {
+      title: "IT Support Specialist",
+      description: "Our 12-week IT Support programme provides hands-on training for technical support roles, covering hardware, software, and network troubleshooting. Students gain real-world experience through simulated service desk scenarios.",
+      curriculum: [
+        "Week 1-3: Computer Hardware Fundamentals",
+        "Week 4-6: Operating Systems & Software",
+        "Week 7-9: Networking Basics & Security",
+        "Week 10-12: Service Desk Operations & Final Assessment"
+      ],
+      outcomes: [
+        "CompTIA A+ certification preparation",
+        "Practical troubleshooting experience",
+        "YES4Youth placement opportunities",
+        "Career coaching and interview preparation"
+      ]
+    },
+    data: {
+      title: "Data Analyst",
+      description: "This 12-week programme equips students with essential data analysis skills using Python, SQL, and visualization tools, preparing them for roles in data-driven organizations.",
+      curriculum: [
+        "Week 1-3: Python for Data Analysis",
+        "Week 4-6: SQL & Database Fundamentals",
+        "Week 7-9: Data Visualization with Power BI",
+        "Week 10-12: Real-world Data Projects"
+      ],
+      outcomes: [
+        "Build a portfolio of data analysis projects",
+        "Microsoft Data Analyst certification prep",
+        "Job placement assistance",
+        "Access to CAPACITI's data employer network"
+      ]
+    },
+    dev: {
+      title: "Software Development",
+      description: "Our 16-week intensive coding bootcamp teaches full-stack development with JavaScript and Python, preparing students for junior developer roles.",
+      curriculum: [
+        "Week 1-4: Programming Fundamentals",
+        "Week 5-8: Front-end Development",
+        "Week 9-12: Back-end Development",
+        "Week 13-16: Agile Projects & Portfolio Building"
+      ],
+      outcomes: [
+        "Build 5+ portfolio projects",
+        "Git and GitHub proficiency",
+        "Agile development experience",
+        "Job placement support"
+      ]
+    },
+    web: {
+      title: "Web Development",
+      description: "This 10-week programme teaches modern web development skills, from HTML/CSS basics to JavaScript frameworks, preparing students for front-end roles.",
+      curriculum: [
+        "Week 1-2: HTML5 & CSS3 Fundamentals",
+        "Week 3-5: JavaScript & DOM Manipulation",
+        "Week 6-8: Responsive Design & CSS Frameworks",
+        "Week 9-10: Portfolio Project Development"
+      ],
+      outcomes: [
+        "Build responsive websites from scratch",
+        "Git version control skills",
+        "Portfolio of 3+ websites",
+        "Job placement assistance"
+      ]
+    },
+    testing: {
+      title: "Software Testing & Automation",
+      description: "This intensive 10-week programme equips students with both manual and automated testing skills, preparing them for quality assurance roles in tech companies.",
+      curriculum: [
+        "Week 1-3: Manual Testing Fundamentals",
+        "Week 4-6: Selenium WebDriver with Java",
+        "Week 7-8: API Testing with Postman",
+        "Week 9-10: CI/CD Integration & Final Project"
+      ],
+      outcomes: [
+        "ISTQB Foundation Level certification prep",
+        "Build a portfolio of test automation projects",
+        "Job placement support with partner companies",
+        "Access to CAPACITI's employer network"
+      ]
     }
+  };
 
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-
-    function closeModal() {
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-}
-
-// Testimonial Slider
-function initTestimonialSlider() {
-    const slides = document.querySelectorAll('.testimonial-slide');
-    const dots = document.querySelectorAll('.nav-dot');
-    let currentSlide = 0;
-
-    function showSlide(index) {
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
+  // Modal functionality
+  document.querySelectorAll('.learn-more-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const programmeId = this.dataset.programme;
+      const programme = programmes[programmeId];
+      
+      const modalHTML = `
+        <h2 class="modal-programme-title">${programme.title}</h2>
+        <p class="modal-programme-description">${programme.description}</p>
         
-        slides[index].classList.add('active');
-        dots[index].classList.add('active');
-    }
-
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            currentSlide = index;
-            showSlide(currentSlide);
-        });
+        <h3 class="modal-section-title">Curriculum Breakdown</h3>
+        <ul class="modal-curriculum-list">
+          ${programme.curriculum.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+        
+        <h3 class="modal-section-title">Key Outcomes</h3>
+        <ul class="modal-outcomes-list">
+          ${programme.outcomes.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+        
+        <a href="#contact" class="modal-cta">Contact Admissions</a>
+      `;
+      
+      document.getElementById('modal-content').innerHTML = modalHTML;
+      document.getElementById('programme-modal').style.display = 'block';
     });
+  });
 
-    // Auto-advance slides
-    setInterval(() => {
-        currentSlide = (currentSlide + 1) % slides.length;
-        showSlide(currentSlide);
-    }, 5000);
-}
+  // Close modal
+  document.querySelector('.close-modal').addEventListener('click', function() {
+    document.getElementById('programme-modal').style.display = 'none';
+  });
 
+  // Close when clicking outside modal
+  window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('programme-modal')) {
+      document.getElementById('programme-modal').style.display = 'none';
+    }
+  });
+  // Counter animation for impact stats
+  document.addEventListener('DOMContentLoaded', function() {
+    const counters = document.querySelectorAll('.stat-number');
+    const speed = 200; // The lower the faster
+    
+    counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const count = +counter.innerText;
+      const increment = target / speed;
+      
+      const updateCount = () => {
+        const currentCount = +counter.innerText;
+        
+        if(currentCount < target) {
+          counter.innerText = Math.ceil(currentCount + increment);
+          setTimeout(updateCount, 1);
+        } else {
+          // Add '+' for numbers that should have it
+          if(counter.getAttribute('data-target') === '4600' || 
+             counter.getAttribute('data-target') === '8000') {
+            counter.innerText = target + '+';
+          } else if(counter.getAttribute('data-target') === '116') {
+            counter.innerText = 'R' + target + 'M+';
+          } else if(counter.getAttribute('data-target') === '337') {
+            counter.innerText = 'R' + target + 'M';
+          } else {
+            counter.innerText = target + '%';
+          }
+        }
+      };
+      
+      // Start counting when element is in viewport
+      const observer = new IntersectionObserver((entries) => {
+        if(entries[0].isIntersecting) {
+          updateCount();
+        }
+      });
+      
+      observer.observe(counter);
+    });
+  });
 // Contact Form
 function initContactForm() {
     const contactForm = document.querySelector('.contact-form');
@@ -1409,9 +1377,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-    // <!-- Chatbot JavaScript -->
-
-class CapacitiChatbot {
+    class CapacitiChatbot {
     constructor() {
         this.isInitialized = false;
         this.responses = {
@@ -1458,7 +1424,6 @@ class CapacitiChatbot {
         this.bindEvents();
     }
 
-    // Initialize chat only when opened for the first time
     initializeChat() {
         if (!this.isInitialized) {
             setTimeout(() => {
@@ -1479,9 +1444,7 @@ class CapacitiChatbot {
         if (chatbotSend && chatbotInput) {
             chatbotSend.addEventListener('click', () => this.handleUserInput());
             chatbotInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    this.handleUserInput();
-                }
+                if (e.key === 'Enter') this.handleUserInput();
             });
         }
 
@@ -1489,20 +1452,19 @@ class CapacitiChatbot {
             openButton.addEventListener('click', () => {
                 chatbotContainer.classList.add('open');
                 openButton.style.display = 'none';
-                this.initializeChat(); // Only initialize when opened
+                this.initializeChat();
             });
         }
 
-        if (chatbotToggle && chatbotContainer) {
+        if (chatbotToggle) {
             chatbotToggle.addEventListener('click', () => {
                 chatbotContainer.classList.toggle('chatbot-minimized');
-                // Use consistent text content for minimize/maximize
                 chatbotToggle.textContent = chatbotContainer.classList.contains('chatbot-minimized') ? '+' : '−';
                 chatbotToggle.title = chatbotContainer.classList.contains('chatbot-minimized') ? 'Expand' : 'Minimize';
             });
         }
 
-        if (chatbotClose && chatbotContainer && openButton) {
+        if (chatbotClose) {
             chatbotClose.addEventListener('click', () => {
                 chatbotContainer.classList.remove('open', 'chatbot-minimized');
                 openButton.style.display = 'flex';
@@ -1517,15 +1479,9 @@ class CapacitiChatbot {
         if (message) {
             this.addMessage(message, 'user');
             input.value = '';
-
-            // Show typing indicator
             this.showTypingIndicator();
-            
-            // Simulate processing time
             await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 800));
-            
             this.hideTypingIndicator();
-
             const response = this.generateResponse(message);
             this.addMessage(response, 'bot');
         }
@@ -1543,9 +1499,7 @@ class CapacitiChatbot {
 
     hideTypingIndicator() {
         const typingIndicator = document.getElementById('typing-indicator');
-        if (typingIndicator) {
-            typingIndicator.remove();
-        }
+        if (typingIndicator) typingIndicator.remove();
     }
 
     addMessage(message, sender) {
@@ -1558,40 +1512,17 @@ class CapacitiChatbot {
     }
 
     generateResponse(message) {
-        const lowerMessage = message.toLowerCase();
-        
-        if (this.containsKeywords(lowerMessage, ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening'])) {
-            return this.getRandomResponse('greeting');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['about', 'what is', 'tell me about', 'capaciti', 'program', 'programme'])) {
-            return this.getRandomResponse('about');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['eligible', 'eligibility', 'requirements', 'qualify', 'who can', 'can i'])) {
-            return this.getRandomResponse('eligibility');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['skills', 'learn', 'teach', 'training', 'courses', 'what will i learn'])) {
-            return this.getRandomResponse('skills');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['apply', 'application', 'how to apply', 'register', 'sign up', 'join'])) {
-            return this.getRandomResponse('application');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['contact', 'reach', 'phone', 'email', 'get in touch', 'call'])) {
-            return this.getRandomResponse('contact');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['duration', 'how long', 'time', 'months', 'weeks', 'length'])) {
-            return this.getRandomResponse('duration');
-        }
-        
-        if (this.containsKeywords(lowerMessage, ['cost', 'price', 'fee', 'money', 'free', 'pay', 'expensive'])) {
-            return this.getRandomResponse('cost');
-        }
-        
+        const lower = message.toLowerCase();
+
+        if (this.containsKeywords(lower, ['hello', 'hi', 'hey'])) return this.getRandomResponse('greeting');
+        if (this.containsKeywords(lower, ['about', 'what is', 'capaciti'])) return this.getRandomResponse('about');
+        if (this.containsKeywords(lower, ['eligibility', 'eligible', 'requirements'])) return this.getRandomResponse('eligibility');
+        if (this.containsKeywords(lower, ['skills', 'learn', 'training'])) return this.getRandomResponse('skills');
+        if (this.containsKeywords(lower, ['apply', 'register', 'join'])) return this.getRandomResponse('application');
+        if (this.containsKeywords(lower, ['contact', 'reach', 'phone'])) return this.getRandomResponse('contact');
+        if (this.containsKeywords(lower, ['duration', 'how long', 'months'])) return this.getRandomResponse('duration');
+        if (this.containsKeywords(lower, ['cost', 'free', 'pay'])) return this.getRandomResponse('cost');
+
         return this.getRandomResponse('default');
     }
 
@@ -1605,29 +1536,10 @@ class CapacitiChatbot {
     }
 }
 
-function createStars() {
-    const starsContainer = document.getElementById('stars');
-    const numberOfStars = 100;
-    
-    for (let i = 0; i < numberOfStars; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        
-        // Random position
-        star.style.left = Math.random() * 100 + '%';
-        star.style.top = Math.random() * 100 + '%';
-        
-        // Random size
-        const size = Math.random() * 3 + 1;
-        star.style.width = size + 'px';
-        star.style.height = size + 'px';
-        
-        // Random animation delay
-        star.style.animationDelay = Math.random() * 3 + 's';
-        
-        starsContainer.appendChild(star);
-    }
-}
+document.addEventListener('DOMContentLoaded', () => {
+    new CapacitiChatbot();
+});
+
 
 // Newsletter form submission
 document.getElementById('newsletterForm').addEventListener('submit', function(e) {
@@ -1658,4 +1570,37 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 document.addEventListener('DOMContentLoaded', () => {
     createStars();
     new CapacitiChatbot();
+
+});
+document.getElementById('capaciti-year').textContent = new Date().getFullYear();
+document.getElementById("footer-year").textContent = new Date().getFullYear();
+document.getElementById("footer-year").textContent = new Date().getFullYear();
+// ===== CREATE DYNAMIC BACKGROUND ELEMENTS =====
+function createBackgroundElements() {
+  const colors = ['#1D2951', '#9115D0', '#F25251', '#F1D1D1'];
+  
+  // Create 5 floating circles
+  for (let i = 0; i < 5; i++) {
+    const circle = document.createElement('div');
+    circle.classList.add('background-circle');
+    
+    // Random properties
+    const size = Math.random() * 400 + 100;
+    circle.style.width = `${size}px`;
+    circle.style.height = `${size}px`;
+    circle.style.background = colors[Math.floor(Math.random() * colors.length)];
+    circle.style.left = `${Math.random() * 100}%`;
+    circle.style.top = `${Math.random() * 100}%`;
+    circle.style.opacity = Math.random() * 0.2 + 0.1;
+    circle.style.animationDuration = `${Math.random() * 30 + 15}s`;
+    circle.style.animationDelay = `${Math.random() * 20}s`;
+    
+    document.body.appendChild(circle);
+  }
+}
+
+// Initialize when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  createBackgroundElements();
+  // ... keep your existing initialization code ...
 });
